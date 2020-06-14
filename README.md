@@ -38,7 +38,7 @@ npm run bundle
 npm run validate
 ```
 
-## Before production
+## Before production
 
 Consider following topics before taking this project as base of your production API:
 
