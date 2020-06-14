@@ -36,7 +36,7 @@ Use `swagger-cli` (`npm install -g @apidevtools/swagger-cli`) to validate and di
 
 Consider following topics before taking this project as base of your production API:
 
-- [ ] This project contains dummy values for demo  (e.g. callbacks, links)
+- [ ] This project contains dummy values for demo purposes (e.g. callbacks, links), which shall be removed.
 - [ ] Application architecture. This project is an example for a **monolith** API, but it can be easily separated into **microservices**. All `<path>.yaml` can be considered as a service, but health info, versioning and logging may need to be refined according to microservices architecture.
 - [ ] Versioning in this project is managed in base path (e.g. `/api/v1`), but there are alternatives, like header (e.g. `Accept: application/vnd.example.v1+json`) custom header (e.g. `Api-Version: 1` or `Accept-Version: 1`) or query parameter (e.g. `?v=1`)
 - [ ] Authentication endpoints are also dummy, refine with your flow or with your SSO service.
