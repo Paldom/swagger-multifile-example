@@ -24,19 +24,10 @@ Install `swagger-ui-watcher` to render changes in your swagger files and observe
 
 ## Build and validate
 
-Use `swagger-cli` to validate and distribute.
+Use `swagger-cli` (`npm install -g @apidevtools/swagger-cli`) to validate and distribute.
 
 - bundle: `swagger-cli bundle ./swagger.yaml -t yaml -o swagger.bundle.yaml`
 - validate": `swagger-cli validate ./swagger.yaml`
-
-For this project, it is also configured in npm:
-
-```sh
-npm install
-
-npm run bundle
-npm run validate
-```
 
 ## Before production
 
