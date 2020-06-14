@@ -1,4 +1,7 @@
 # swagger-multifile-example
+
+[![Build Status](https://travis-ci.org/Paldom/swagger-multifile-example.svg?branch=master)](https://travis-ci.org/Paldom/swagger-multifile-example)
+
 Example multi-file OpenAPI 3.0 (OAS 3.0) specs for mobile and web applications. Specifications are spitted into smaller YAML files for better reusability, maintainability and separation.
 
 This API specification is describing a sample blog service.
