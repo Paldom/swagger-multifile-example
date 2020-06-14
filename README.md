@@ -32,7 +32,7 @@ Use `swagger-cli` (`npm install -g @apidevtools/swagger-cli`) to validate and di
 - bundle: `swagger-cli bundle ./swagger.yaml -t yaml -o swagger.bundle.yaml`
 - validate": `swagger-cli validate ./swagger.yaml`
 
-## Before production
+## Checklist before production
 
 Consider following topics before taking this project as base of your production API:
 
