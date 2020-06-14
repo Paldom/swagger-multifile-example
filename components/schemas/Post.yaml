@@ -1,0 +1,38 @@
+Post:
+  required:
+    - tags
+    - title
+    - intro
+  properties:
+    id:
+      $ref: "./defaults.yaml#/id"
+    images: 
+      type: array
+      items:
+        $ref: "./defaults.yaml#/image"
+    tags: 
+      type: array
+      items:
+        type: string
+    title:
+      type: string
+      minLength: 3
+      maxLength: 150
+    intro: 
+      type: string
+      maxLength: 500
+
+PostDetailed:
+  allOf:
+  - $ref: '#/Post'
+  - type: object
+    properties:
+      createdAt:
+        type: string
+        format: date-time
+      updatedAt:
+        type: string
+        format: date-time
+      content: 
+        type: string
+        maxLength: 15000

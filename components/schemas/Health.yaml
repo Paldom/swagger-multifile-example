@@ -1,0 +1,39 @@
+Health:
+  required:
+  - generatedAt
+  - uptime
+  - connections
+  type: object
+  properties:
+    timestamp:
+      type: string
+      format: date-time
+    uptime:
+      type: number
+      description: Server uptime in milliseconds
+    connections:
+      type: object
+      description: Named connection test for each db and other integrations
+      additionalProperties:
+          $ref: '#/HealthConnection'
+
+HealthConnection:
+  required:
+  - timestamp
+  - success
+  - duration
+  - message
+  type: object
+  properties:
+    timestamp:
+      type: string
+      format: date-time
+    success:
+      type: boolean
+      description: true if connection check succeed 
+    duration:
+      type: number
+      description: Connection test duration in milliseconds
+    status:
+      type: string
+      description: Status message, e.g. for describing errors

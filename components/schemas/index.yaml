@@ -1,0 +1,39 @@
+Comment:
+  $ref: './Comment.yaml#/Comment'
+
+Config:
+  $ref: './Config.yaml#/Config'
+
+User:
+  $ref: './User.yaml#/User'
+
+UserDetailed:
+  $ref: './User.yaml#/UserDetailed'
+
+UserRegistration:
+  $ref: './User.yaml#/UserRegistration'
+
+Token:
+  $ref: './User.yaml#/Token'
+
+Device:
+  $ref: './User.yaml#/Device'
+
+Post:
+  $ref: './Post.yaml#/Post'
+
+PostDetailed:
+  $ref: './Post.yaml#/PostDetailed'
+
+Health:
+  $ref: './Health.yaml#/Health'
+
+HealthConnection:
+  $ref: './Health.yaml#/HealthConnection'
+
+Error:
+  $ref: './Error.yaml#/Error'
+
+
+
+  

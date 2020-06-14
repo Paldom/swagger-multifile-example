@@ -1,0 +1,45 @@
+openapi: 3.0.3
+info:
+  $ref: ../defaults/info.yaml
+
+tags:
+  $ref: ../defaults/tags.yaml
+
+servers:
+  $ref: ../defaults/servers.yaml
+
+security:
+  $ref: ../defaults/security.yaml
+
+components:
+  $ref: '../components/index.yaml'
+
+paths:
+  /health:
+  
+    get:
+      tags:
+      - Health
+      summary: Health check
+      description: Get detailed info about server health status.
+      operationId: getHealth
+      parameters:
+        - in: query
+          name: secure
+          schema:
+            type: string
+            example: eddb6be2-ae43-11ea-b3de-0242ac130004
+          description: Secure key for accessing health info
+      responses:
+        200:
+          description: Service Healthy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Health'
+        503:
+          description: Service Unhealthy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Health'

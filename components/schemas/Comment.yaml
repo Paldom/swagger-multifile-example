@@ -1,0 +1,21 @@
+Comment:
+  required:
+  - comment
+  - postId
+  - user
+  type: object
+  properties:
+    id:
+      $ref: "./defaults.yaml#/id"
+    username:
+      type: string
+    postId:
+      $ref: "./defaults.yaml#/id"
+    createdAt:
+      type: string
+      format: date-time
+    updatedAt:
+      type: string
+      format: date-time
+    message:
+      type: string

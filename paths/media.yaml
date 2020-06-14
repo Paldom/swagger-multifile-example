@@ -1,0 +1,101 @@
+openapi: 3.0.3
+info:
+  $ref: ../defaults/info.yaml
+
+tags:
+  $ref: ../defaults/tags.yaml
+
+servers:
+  $ref: ../defaults/servers.yaml
+
+security:
+  $ref: ../defaults/security.yaml
+
+components:
+  $ref: '../components/index.yaml' 
+
+paths:
+
+  /{size}/smart/{imageUrl}:
+    servers:
+      - url: https://imgproxy.example.com
+        description: Host of image proxy
+  
+    get:
+      tags:
+        - Media
+      summary: Image proxy
+      description: | 
+        Image proxy service (like imgproxy, Thumbor etc.).
+        Provides on-demand crop, resizing and flipping of images and caching of them.
+        Check docs of service for detailed documentation.
+      parameters:
+        - in: path
+          name: size
+          description: Image size
+          schema:
+            type: string
+            example: 200x300
+          required: true
+        - in: path
+          name: imageUrl
+          description: Url of raw image to manipulate.
+          schema:
+            type: string
+            example: "example.com/api/v1/media/image.jpg"
+          required: true
+      responses:
+        200:
+          description: Successful operation
+          content:
+            image/jpeg:
+              schema:
+                type: string
+                format: binary
+            image/png:
+              schema:
+                type: string
+                format: binary
+        401:
+          $ref: '#/components/responses/Unauthorized' 
+        404:
+          $ref: '#/components/responses/NotFound'  
+        default:
+          $ref: '#/components/responses/Unexpected'   
+
+
+  /media/{image}:
+  
+    get:
+      tags:
+        - Media
+      summary: Get Image
+      description: Get raw image from media service
+      operationId: getImage
+      parameters:
+        - $ref: '#/components/parameters/langHeader'
+        - in: path
+          name: image
+          description: filename
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          description: Successful operation
+          content:
+            image/jpeg:
+              schema:
+                type: string
+                format: binary
+            image/png:
+              schema:
+                type: string
+                format: binary
+        401:
+          $ref: '#/components/responses/Unauthorized' 
+        404:
+          $ref: '#/components/responses/NotFound'  
+        default:
+          $ref: '#/components/responses/Unexpected' 
+

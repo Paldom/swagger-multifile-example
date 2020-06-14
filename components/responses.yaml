@@ -1,0 +1,100 @@
+# Error responses
+
+# 400
+Unexpected:
+  description: Generic error
+  content:
+    application/json:
+      schema:
+        $ref: './schemas/Error.yaml#/Error'
+      examples:
+        E1000:
+          value:
+            code: 1000
+            message: Dummy custom error code 1000
+        E1001:
+          value:
+            code: 1001
+            message: Dummy custom error code 1001 
+
+# 401
+Unauthorized:
+  description: Unauthorized
+  content:
+    application/json:
+      schema:
+        $ref: './schemas/Error.yaml#/Error'
+
+# 403
+Forbidden:
+  description: Unauthorized
+  content:
+    application/json:
+      schema:
+        $ref: './schemas/Error.yaml#/Error'
+
+# 404
+NotFound:
+  description: The specified resource was not found
+  content:
+    application/json:
+      schema:
+        $ref: './schemas/Error.yaml#/Error'
+
+# 409
+Conflict:
+  description: Conflict
+  content:
+    application/json:
+      schema:
+        $ref: './schemas/Error.yaml#/Error'
+
+# 410
+Gone:
+  description: Gone (e.g. end point is no longer available)
+  content:
+    application/json:
+      schema:
+        $ref: './schemas/Error.yaml#/Error'
+
+
+# 422
+InvalidValue:
+  description: Invalid value
+  content:
+    application/json:
+      schema:
+        $ref: './schemas/Error.yaml#/Error'
+
+# 429
+TooMany:
+  description: Too Many Attempts or Requests
+  content:
+    application/json:
+      schema:
+        $ref: './schemas/Error.yaml#/Error'
+
+# 500
+InternalError:
+  description: Internal server error
+  content:
+    application/json:
+      schema:
+        $ref: './schemas/Error.yaml#/Error'
+
+# 501
+NotImplemented:
+  description: Not Implemented
+  content:
+    application/json:
+      schema:
+        $ref: './schemas/Error.yaml#/Error'
+
+# 503
+ServiceUnavailable:
+  description: Service Unavailable
+  content:
+    application/json:
+      schema:
+        $ref: './schemas/Error.yaml#/Error'
+  

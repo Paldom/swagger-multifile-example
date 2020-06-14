@@ -1,0 +1,23 @@
+language: node_js
+node_js:
+- 'lts/*'
+
+cache: npm
+
+install: npm install
+
+jobs:
+  include:
+    - stage: validate
+      scrip: npm run validate
+    - stage: validate
+      scrip: npm run bundle
+    - stage: release
+      deploy:
+        provider: releases
+        api_key: $GITHUB_OAUTH_TOKEN
+        file: swagger.bundle.yaml
+        skip_cleanup: true
+        on:
+          tags: true
+  

@@ -1,0 +1,350 @@
+openapi: 3.0.3
+info:
+  $ref: ../defaults/info.yaml
+
+tags:
+  $ref: ../defaults/tags.yaml
+
+servers:
+  $ref: ../defaults/servers.yaml
+
+security:
+  $ref: ../defaults/security.yaml
+
+components:
+  $ref: '../components/index.yaml'
+
+paths:
+  /user:
+  
+    post:
+      tags:
+        - User
+      summary: Register user
+      description: Start user registration process.
+      operationId: createUser
+      parameters:
+      - $ref: '#/components/parameters/langHeader'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRegistration'
+        required: true
+      responses:
+        201:
+          description: Successful pre-registration
+          content: {}
+        409:
+          $ref: '#/components/responses/Conflict'
+        422:
+          $ref: '#/components/responses/InvalidValue'
+        429:
+          $ref: '#/components/responses/TooMany'
+        default:
+          $ref: '#/components/responses/Unexpected'   
+
+  /user/{userId}/verify/{verificationKey}:
+
+    post:
+      tags:
+        - User
+      summary: Verify user
+      description: User e-mail verification.
+      operationId: verifyUser
+      parameters:
+      - $ref: '#/components/parameters/langHeader'
+      - $ref: '#/components/parameters/userId'
+      - name: verificationKey
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Successful verification
+          content: {}
+        422:
+          $ref: '#/components/responses/InvalidValue'
+        default:
+          $ref: '#/components/responses/Unexpected'   
+
+  /user/forgot:
+    post:
+      tags:
+        - User
+      summary: Request password reset
+      description: Initiate a password reset flow.
+      operationId: forgotPassword
+      parameters:
+      - $ref: '#/components/parameters/langHeader'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+        required: true
+      responses:
+        200:
+          description: Successful password change request
+          content: {}
+        429:
+          $ref: '#/components/responses/TooMany'
+        default:
+          $ref: '#/components/responses/Unexpected'   
+
+
+  /user/{userId}/reset/{resetKey}:
+    post:
+      tags:
+        - User
+      summary: Reset password
+      description: Create new password with reset key.
+      operationId: resetPassword
+      parameters:
+      - $ref: '#/components/parameters/langHeader'
+      - $ref: '#/components/parameters/userId'
+      - name: resetKey
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: New password
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                password:
+                  type: string
+        required: true
+      responses:
+        200:
+          description: Successful password change
+          content: {}
+        429:
+          $ref: '#/components/responses/TooMany'
+        422:
+          $ref: '#/components/responses/InvalidValue'
+        default:
+          $ref: '#/components/responses/Unexpected'   
+
+  /user/auth/login:
+    post:
+      tags:
+        - User
+      summary: Login with username and password
+      description: Login with credentials passed with basic auth.
+      operationId: login
+      parameters:
+      - $ref: '#/components/parameters/langHeader'
+      responses:
+        200:
+          description: Successful login, access token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Token'
+        422:
+          $ref: '#/components/responses/InvalidValue'
+        429:
+          $ref: '#/components/responses/TooMany'
+        default:
+          $ref: '#/components/responses/Unexpected'   
+      security:
+      - BasicAuth: []
+
+  /user/auth/google:
+    post:
+      tags:
+        - User
+      summary: Google Sign-in
+      description: "Login with Google, \nMore details: https://developers.google.com/identity/sign-in/web/backend-auth"
+      operationId: loginGoogle
+      parameters:
+      - $ref: '#/components/parameters/langHeader'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id_token:
+                  type: string
+        required: true
+      responses:
+        200:
+          description: Successful login, access token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Token'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        default:
+          $ref: '#/components/responses/Unexpected'   
+
+  /user/auth/facebook:
+    post:
+      tags:
+        - User
+      summary: Facebook Sign-in
+      description: "Login with Facebook, \nMore details: https://developers.facebook.com/docs/facebook-login/access-tokens/\n"
+      operationId: loginFacebook
+      parameters:
+      - $ref: '#/components/parameters/langHeader'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: string
+                access_token:
+                  type: string
+        required: true
+      responses:
+        200:
+          description: Successful login, access token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Token'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        default:
+          $ref: '#/components/responses/Unexpected'   
+
+  /user/{userId}:
+    parameters:
+      - $ref: '#/components/parameters/langHeader'
+      - $ref: '#/components/parameters/userId'
+
+    get:
+      tags:
+        - User
+      summary: Get user details
+      description: Get user & basic settings info
+      operationId: getUser
+      responses:
+        200:
+          description: UserDetailed object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDetailed'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        default:
+          $ref: '#/components/responses/Unexpected'   
+      security:
+      - BearerAuth: []
+
+    put:
+      tags:
+        - User
+      summary: Update user details
+      description: Change user basic settings (not the secure parts)
+      operationId: upadateUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserDetailed'
+        required: true
+      responses:
+        200:
+          description: UserDetailed object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDetailed'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        default:
+          $ref: '#/components/responses/Unexpected' 
+      security:
+      - BearerAuth: []
+
+  /user/{userId}/secure:
+    put:
+      tags:
+        - User
+      summary: Update secure user details
+      description: Change user secure settings (e.g. change password)
+      operationId: upadateUserSecure
+      parameters:
+      - $ref: '#/components/parameters/langHeader'
+      - $ref: '#/components/parameters/userId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserDetailed'
+        required: true
+      responses:
+        200:
+          description: UserDetailed object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDetailed'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        default:
+          $ref: '#/components/responses/Unexpected' 
+      security:
+      - BasicAuth: []
+
+  /user/auth/logout:
+    post:
+      tags:
+        - User
+      summary: Logout
+      description: Logout current user
+      operationId: logout
+      parameters:
+      - $ref: '#/components/parameters/langHeader'
+      responses:
+        200:
+          description: Successful logout
+          content: {}
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        default:
+          $ref: '#/components/responses/Unexpected' 
+      security:
+      - BearerAuth: []
+
+
+  /user/{userId}/device:
+    parameters:
+      - $ref: '#/components/parameters/langHeader'
+      - $ref: '#/components/parameters/userId'
+
+    post:
+      tags:
+        - User
+      summary: Register user's device
+      description: Register new device token for push notification
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Device'
+        required: true
+      responses:
+        201:
+          description: Device created
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        default:
+          $ref: '#/components/responses/Unexpected'
+      security:
+      - BearerAuth: []
+    

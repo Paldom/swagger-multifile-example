@@ -1,0 +1,29 @@
+user:
+  value:
+    id: IDU000001
+    username: testuser
+    email: user@example.com
+    image: profile.jpg
+    firstName: Test
+    lastName: User
+
+posts:
+  value:
+  - id: IDP000001
+    images: []
+    tags: [tag1, tag2]
+    title: Test Post 1
+    intro: Intro of test post 1.
+  - id: IDP000002
+    images: [post2.jpg]
+    tags: [tag1]
+    title: Test Post 2
+    intro: Intro of test post 2.
+
+comments:
+  value:
+  - id: 10
+    name: Jessica Smith
+  - id: 20
+    name: Ron Stewart
+  

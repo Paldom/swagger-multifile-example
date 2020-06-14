@@ -1,0 +1,81 @@
+openapi: 3.0.3
+info:
+  $ref: ../defaults/info.yaml
+
+tags:
+  $ref: ../defaults/tags.yaml
+
+servers:
+  $ref: ../defaults/servers.yaml
+
+security:
+  $ref: ../defaults/security.yaml
+
+components:
+  $ref: '../components/index.yaml'
+
+paths:
+  /config:
+  
+    get:
+      tags:
+        - Config
+      summary: Initial endpoint
+      description: Get basic configurations, also check for updates on mobile clients.
+      operationId: getConfig
+      parameters:
+        - $ref: '#/components/parameters/langHeader'
+        - in: query
+          name: version
+          description: Version of the web or mobile client.
+          schema:
+            type: string
+          required: true
+        - in: query
+          name: platform
+          description: Client platform.
+          schema:
+            type: string
+            enum:
+              - Web
+              - iOS
+              - Android
+          required: true
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Config'
+              examples:
+                versionValid:
+                  value:
+                    version: 1.0.0
+                    update:
+                      recommended: false
+                      force: false
+                      link: "https://example.com/download"
+                    config: {}
+                  summary: Version is valid, no update required.
+                recommendedUpdate:
+                  value:
+                    version: 1.0.0
+                    update:
+                      recommended: false
+                      force: false
+                      link: "https://example.com/download"
+                    config: {}
+                  summary: Update is optional on Android.
+                forceUpdate:
+                  value:
+                    version: 1.0.0
+                    update:
+                      recommended: false
+                      force: false
+                      link: "https://example.com/download"
+                    config: {}
+                  summary: Update is mandatory on iOS.
+        default:
+          $ref: '#/components/responses/Unexpected'   
+

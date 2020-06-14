@@ -1,0 +1,19 @@
+id:
+  type: string
+  description: Unique id
+  example: "ID0000000"
+image:
+  type: string
+  description: Image url
+  example: "image.jpg"
+link:
+  type: string
+  description: navigable URL
+  example: "https://google.com"
+platform:
+  type: string
+  description: Device platform
+  enum: 
+    - Web
+    - Android
+    - iOS

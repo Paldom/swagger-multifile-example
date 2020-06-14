@@ -1,0 +1,57 @@
+User:
+  required:
+  - username
+  - email
+  type: object
+  properties:
+    id:
+      $ref: "./defaults.yaml#/id"
+    username:
+      type: string
+    email:
+      type: string
+      format: email
+
+UserDetailed:
+  allOf:
+  - $ref: '#/User'
+  - type: object
+    properties:
+      image:
+        type: string
+      firstName:
+        type: string
+      lastName:
+        type: string
+
+UserRegistration:
+  type: object
+  properties:
+    email:
+      type: string
+      format: email
+    firstName:
+        type: string
+    lastName:
+        type: string
+    password:
+        type: string
+
+Token:
+  type: object
+  description: Bearer JWT token
+  properties:
+   token:
+    type: string
+
+Device:
+  properties:
+    id:
+      $ref: "./defaults.yaml#/id"
+    token:
+      type: string
+    platform:
+      $ref: "./defaults.yaml#/platform"
+  required:
+    - token
+    - platform

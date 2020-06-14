@@ -1,0 +1,21 @@
+Config:
+  type: object
+  properties:
+    version:
+      type: string
+      description: Describe server version
+    update:
+      type: object
+      properties:
+        recommended:
+          type: boolean
+          description: false if upgrade recommended
+        force:
+          type: boolean
+          description: true if upgrade mandatory
+        link:
+          $ref: "./defaults.yaml#/link"
+    config:
+      type: object
+      additionalProperties:
+        type: string

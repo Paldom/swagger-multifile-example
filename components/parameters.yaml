@@ -1,0 +1,142 @@
+# Headers
+
+langHeader:
+  in: header
+  name: Accept-Language
+  required: true
+  description: |
+    `Accept-Language` header according to HTTP standards, it contains:
+    - `<language>`: locale identifier. Language tag, followed by an optional country or region variant subtags  (like `en-US` or `fr-CA`).
+    - `*`: any language wildcard.
+    - `;q=`: q-factor weights describing order of priority of values in a comma-separated list. (E.g. `en-US, en;q=0.9, fr-CH;q=0.8, fr;q=0.7, *;q=0.5`)
+  schema:
+    type: string
+    enum:
+      - hu-HU
+      - en-US
+    default: hu-HU
+
+# Query params
+
+sortParam:
+  in: query
+  name: sort
+  required: false
+  schema:
+    type: string
+  description: |
+    Sort queries with direction (`+` ascending / `-` descending) and fields.
+  examples:
+    ascendingByDate:
+        value: "createdAt"
+        summary: Sort ascending by `field createdAt`
+    descendingByDate:
+        value: "createdAt"
+        summary: Sort descending by `field createdAt`
+
+fieldsParam:
+  in: query
+  name: fields
+  required: false
+  explode: false
+  style: form
+  schema:
+    type: array
+    items:
+      type: string
+  description: Get only specific fields (or exclude them).
+  examples:
+    include:
+        value: ["firstName","lastName"]
+        summary: Get only first and last name.
+    exclude:
+        value: ["-createdAt"]
+        summary: Exclude creation date from response. 
+    
+searchParam:
+  in: query
+  name: q
+  required: false
+  schema:
+    type: string
+  description: Free text search. 
+
+filterParam:
+  in: query
+  name: field
+  required: false
+  explode: true
+  style: deepObject
+  schema:
+    type: string
+  description: |
+    Filter result collection by values of specific fields.
+    Generic name `field` is used in this definition, but it can be substituted with any field of the result schema.
+    Common operators for all field types (boolean, string, date, numeric):
+    - `.ne` - not equals
+    - `.eq` - equals
+    Numeric, date and string only operators:
+    - `.gt`- greater ( > )
+    - `.gte` - greater than (>=)
+    - `.lt` - less (<)
+    - `.lte` - less than (<=)
+    String only operators:
+    - `regex` - match regex expression
+    - `.cs` - contains substring
+    - `.ncs` - does not contain substring
+    - `.nregex` - does not match regular expression
+    E.g. `?createdAt[lt]=2020-06-10&updatedAt[lt]=2020-06-12`
+    
+offsetParam:
+  in: query
+  name: offset
+  required: false
+  schema:
+    type: integer
+    minimum: 0
+  description: The number of items to skip before starting to collect the result set.
+  examples:
+    zero:
+      value: 0
+      summary: Return items from the first matching one.
+    ten:
+      value: 10
+      summary: Skip first 10 items from match.
+
+limitParam:
+  in: query
+  name: limit
+  required: false
+  schema:
+    type: integer
+    minimum: 1
+    maximum: 50
+    default: 20
+  description: The numbers of items to return.
+  examples:
+    ten:
+      value: 10
+      summary: Return 10 matching items starting at index of `offset` value.
+
+# Path params
+
+userId:
+  in: path
+  name: userId
+  schema:
+    type: string
+  required: true
+
+postId:
+  in: path
+  name: postId
+  schema:
+    type: string
+  required: true
+
+commentId:
+  in: path
+  name: commentId
+  schema:
+    type: string
+  required: true

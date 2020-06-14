@@ -1,0 +1,15 @@
+PostBody:
+  description: A JSON object containing blog post information
+  required: true
+  content:
+    application/json:
+      schema:
+        $ref: './schemas/index.yaml#/PostDetailed'
+
+CommentBody:
+  description: A JSON object containing comment information
+  required: true
+  content:
+    application/json:
+      schema:
+        $ref: './schemas/index.yaml#/Comment'

@@ -1,0 +1,10 @@
+- name: Config
+  description: "Configuration data, version check and other initial endpoints"
+- name: User
+  description: "User related services (authentication, settings, device managment, etc.). Auth can be exchanged with Firebase Auth or SSO services."
+- name: Blog
+  description: "Blog related endpoints, posts and comments"
+- name: Media
+  description: "Media service, providing all media resources"
+- name: Health
+  description: "Health check information related endpoints"

@@ -1,0 +1,25 @@
+{
+  "name": "swagger-multifile-example",
+  "version": "1.0.0",
+  "description": "Multi-file OpenAPI 3.0 (OAS 3.0) specification example",
+  "main": "index.js",
+  "scripts": {
+    "bundle": "swagger-cli bundle ./swagger.yaml -t yaml -o swagger.bundle.yaml",
+    "validate": "swagger-cli validate ./swagger.yaml"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Paldom/swagger-multifile-example.git"
+  },
+  "keywords": [
+    "swagger",
+    "oas3",
+    "multifile"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Paldom/swagger-multifile-example/issues"
+  },
+  "homepage": "https://github.com/Paldom/swagger-multifile-example#readme"
+}

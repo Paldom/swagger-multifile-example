@@ -1,0 +1,267 @@
+openapi: 3.0.3
+info:
+  $ref: ../defaults/info.yaml
+
+tags:
+  $ref: ../defaults/tags.yaml
+
+servers:
+  $ref: ../defaults/servers.yaml
+
+security:
+  $ref: ../defaults/security.yaml
+
+components:
+  $ref: '../components/index.yaml'
+
+paths:
+  /blog/post:
+
+    parameters:
+      - $ref: '#/components/parameters/langHeader'
+
+    get:
+      tags:
+        - Blog
+      summary: Get blog posts
+      description: Get posts list with filtering and pagination
+      operationId: getPosts
+      parameters:
+      - $ref: '#/components/parameters/langHeader'
+      - $ref: '#/components/parameters/searchParam'
+      - $ref: '#/components/parameters/sortParam'
+      - $ref: '#/components/parameters/fieldsParam'
+      - $ref: '#/components/parameters/filterParam'
+      - $ref: '#/components/parameters/offsetParam'
+      - $ref: '#/components/parameters/limitParam'
+      responses:
+        200:
+          description: Post objects
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Post"
+        default:
+          $ref: '#/components/responses/Unexpected'   
+            
+    post:
+      tags:
+        - Blog
+      summary: Create post
+      description: Create a new post to a blog with uploading images
+      operationId: createPost
+      requestBody:
+        description: Post to create
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                post:
+                  $ref: '#/components/schemas/PostDetailed'
+                filename:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+            encoding:
+              filename: 
+                contentType: image/png, image/jpeg
+      responses:
+        201:
+          description: Created post object
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PostDetailed"
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        403:
+          $ref: '#/components/responses/Forbidden'
+        default:
+          $ref: '#/components/responses/Unexpected' 
+      security:
+        - BearerAuth: []
+        
+  /blog/post/{postId}:
+    parameters:
+      - $ref: '#/components/parameters/langHeader'
+      - $ref: '#/components/parameters/postId'
+
+    get:
+      tags:
+        - Blog
+      summary: Get post
+      description: Get one post from blog
+      operationId: getPost
+      responses:
+        200:
+          description: Post object
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PostDetailed"
+        default:
+          $ref: '#/components/responses/Unexpected' 
+    put:
+      tags:
+        - Blog
+      summary: Update post
+      description: Change post details
+      operationId: updatePost
+      requestBody:
+        description: Post to update
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostDetailed'
+      responses:
+        200:
+          description: Post object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostDetailed'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        403:
+          $ref: '#/components/responses/Forbidden'
+        404:
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/Unexpected' 
+      security:
+        - BearerAuth: []
+        
+    delete:
+      tags:
+        - Blog
+      summary: Remove post
+      description: Remove post from blog
+      operationId: deletePost
+      responses:
+        204:
+          description: Removed
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        403:
+          $ref: '#/components/responses/Forbidden'
+        404:
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/Unexpected' 
+      security:
+        - BearerAuth: []
+
+  /blog/post/{postId}/comment:
+    parameters:
+      - $ref: '#/components/parameters/langHeader'
+      - $ref: '#/components/parameters/postId'
+
+    get:
+      tags:
+        - Blog
+      summary: Get comments
+      description: Get list of comments that belongs to a post
+      operationId: getComments
+      parameters:
+        - $ref: '#/components/parameters/searchParam'
+        - $ref: '#/components/parameters/sortParam'
+        - $ref: '#/components/parameters/fieldsParam'
+        - $ref: '#/components/parameters/filterParam'
+        - $ref: '#/components/parameters/offsetParam'
+        - $ref: '#/components/parameters/limitParam'
+      responses:
+        200:
+          description: Comment objects
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Comment'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        default:
+          $ref: '#/components/responses/Unexpected' 
+      security:
+      - BearerAuth: []
+
+    post:
+      tags:
+        - Blog
+      summary: Create comment
+      description: Create a new comment
+      operationId: createComment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Comment'
+        required: true
+      responses:
+        201:
+          description: Created comment object
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        default:
+          $ref: '#/components/responses/Unexpected' 
+      security:
+      - BearerAuth: []
+
+  /blog/post/{postId}/comment/{commentId}:
+    parameters:
+      - $ref: '#/components/parameters/langHeader'
+      - $ref: '#/components/parameters/postId'
+      - $ref: '#/components/parameters/commentId'
+
+    put:
+      tags:
+        - Blog
+      summary: Update comment
+      description: Change comment details
+      operationId: updateComment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Comment'
+        required: true
+      responses:
+        200:
+          description: Comment object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/Unexpected' 
+      security:
+      - BearerAuth: []
+
+    delete:
+      tags:
+        - Blog
+      summary: Remove comment
+      description: Remove a specific comment
+      operationId: deleteComment
+      responses:
+        204:
+          description: Removed
+          content: {}
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/Unexpected' 
+      security:
+      - BearerAuth: []

@@ -1,0 +1,16 @@
+BasicAuth:
+  type: http
+  scheme: basic
+
+BearerAuth:
+  description: JWT header
+  type: http
+  scheme: bearer
+  bearerFormat: JWT
+
+ApiKey:
+  description: API key for all endpoints
+  type: apiKey
+  in: header
+  name: X-API-Key
+

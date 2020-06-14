@@ -1,0 +1,4 @@
+  version: 1.0.0
+  title: Multi-file swagger REST API specification
+  description: |-
+    Example OpenAPI 3.0 (OAS 3.0) specification for a blog service.
