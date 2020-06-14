@@ -52,3 +52,4 @@ Consider following topics before taking this project as base of your production 
 - [ ] Of course add the endpoints you need, and don't forget to remove.
 
 Feedback is welcomed, if you use this base project.
+
